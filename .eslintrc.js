@@ -16,7 +16,7 @@ module.exports = {
     'vue/max-len': ['error', {
       'ignoreUrls': true,
       'template': 80,
-      'code': 80,
+      'code': 100,
     }],
   },
   overrides: [
