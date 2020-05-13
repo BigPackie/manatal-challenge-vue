@@ -13,6 +13,11 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'vue/max-len': ['error', {
+      'ignoreUrls': true,
+      'template': 80,
+      'code': 80,
+    }],
   },
   overrides: [
     {
