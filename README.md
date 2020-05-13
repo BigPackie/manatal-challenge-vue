@@ -1,5 +1,7 @@
 # manatal-challenge-vue
 
+This application's purpose is to showcase my skills in Vue and other related technologies
+
 ## Project setup
 ```
 npm install
