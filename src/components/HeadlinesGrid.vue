@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-overlay  opacity="1" v-if="isLoading">
+    <v-overlay  absolute opacity="0" v-if="isLoading">
       <v-progress-circular
         indeterminate
         color="primary"
