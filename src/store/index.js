@@ -9,7 +9,7 @@ export default new Vuex.Store({
     headlines: [],
   },
   getters: {
-    getHeadlines(state) {
+    headlines(state) {
       return state.headlines;
     },
   },
@@ -21,7 +21,12 @@ export default new Vuex.Store({
   actions: {
     fetchAllHeadlines({ commit }) {
       console.log('fetching headlines action activated');
-      return fetchHeadlines().then((headlines) => commit('setHeadlines', headlines));
+      return fetchHeadlines().then((headlines) => {
+        const enrichedHeadlines = headlines.map(
+          (headline, index) => ({ customId: index, ...headline }),
+        );
+        commit('setHeadlines', enrichedHeadlines);
+      });
     },
   },
   modules: {

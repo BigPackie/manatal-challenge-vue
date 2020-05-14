@@ -1,31 +1,43 @@
 <template>
- <v-container fluid>
+  <v-container fluid>
+    <v-overlay  opacity="1" v-if="isLoading">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+        size="128"
+      >
+        Loading news
+      </v-progress-circular>
+    </v-overlay>
+
     <v-row justify="center">
-      <v-container v-if="isLoading" class="mx-auto">
-        <span>Loadings news...</span>
-      </v-container>
-      <HeadlineCard v-for="n in 10" :key="n"></HeadlineCard>
+      <HeadlineCard
+        v-for="headline in headlines" :key="headline.customId"
+        :headline="headline">
+      </HeadlineCard>
     </v-row>
- </v-container>
+  </v-container>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import HeadlineCard from './HeadlineCard.vue';
 
 export default {
+  components: {
+    HeadlineCard,
+  },
   data() {
     return {
       isLoading: true,
     };
   },
-  components: {
-    HeadlineCard,
+  computed: {
+    ...mapGetters(['headlines']),
   },
+
   methods: {
-    ...mapActions([
-      'fetchAllHeadlines',
-    ]),
+    ...mapActions(['fetchAllHeadlines']),
   },
   created() {
     console.log('HeadlinesGridComponent created hook');
@@ -34,11 +46,12 @@ export default {
       .catch(() => {
         console.log('Failed getting headlines. Try to reload the page.');
       }) // show in modal or somethign, maybe provide button for reload
-      .finally(() => { this.isLoading = false; });
+      .finally(() => {
+        this.isLoading = false;
+      });
   },
 };
 </script>
 
 <style scoped>
-
 </style>
