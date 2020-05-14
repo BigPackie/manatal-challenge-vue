@@ -34,12 +34,18 @@
       </v-badge>
     </v-app-bar>
 
-    <v-container>Headlines view</v-container>
+    <HeadlinesGrid/>
   </div>
 </template>
 
 <script>
-export default {};
+import HeadlinesGrid from '../components/HeadlinesGrid.vue';
+
+export default {
+  components: {
+    HeadlinesGrid,
+  },
+};
 </script>
 
 <style>
