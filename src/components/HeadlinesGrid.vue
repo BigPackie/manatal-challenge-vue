@@ -1,15 +1,6 @@
 <template>
   <v-container fluid>
-    <v-overlay  absolute opacity="0" v-if="isLoading">
-      <v-progress-circular
-        indeterminate
-        color="primary"
-        size="128"
-      >
-        Loading news
-      </v-progress-circular>
-    </v-overlay>
-
+    <Loading :isLoading="isLoading">Loading news...</Loading>
     <v-row justify="center">
       <HeadlineCard
         v-for="headline in headlines" :key="headline.customId"
@@ -29,7 +20,7 @@ export default {
   },
   data() {
     return {
-      isLoading: true,
+      isLoading: false,
     };
   },
   computed: {
@@ -41,14 +32,17 @@ export default {
   },
   created() {
     console.log('HeadlinesGridComponent created hook');
-    this.fetchAllHeadlines()
-      .then(/* Handled by store */)
-      .catch(() => {
-        console.log('Failed getting headlines. Try to reload the page.');
-      }) // show in modal or somethign, maybe provide button for reload
-      .finally(() => {
-        this.isLoading = false;
-      });
+    if (this.headlines.length === 0) {
+      this.isLoading = true;
+      this.fetchAllHeadlines()
+        .then(/* Handled by store */)
+        .catch(() => {
+          console.log('Failed getting headlines. Try to reload the page.');
+        }) // show in modal or somethign, maybe provide button for reload
+        .finally(() => {
+          this.isLoading = false;
+        });
+    }
   },
 };
 </script>
