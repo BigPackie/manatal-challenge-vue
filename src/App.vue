@@ -1,9 +1,11 @@
 <template>
   <v-app>
     <v-content>
-      <keep-alive>
-        <router-view to="/news"></router-view>
-      </keep-alive>
+      <v-fade-transition>
+        <keep-alive>
+          <router-view to="/news"></router-view>
+        </keep-alive>
+      </v-fade-transition>
     </v-content>
   </v-app>
 </template>

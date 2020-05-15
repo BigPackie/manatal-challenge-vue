@@ -70,7 +70,7 @@ export default {
   },
   watch: {
     $route(to) {
-      if (to.path === '/news') {
+      if (to.name === 'news') {
         return;
       }
       this.lazyLoadHeadline();
