@@ -13,13 +13,15 @@
                   ref="form"
                   v-model="valid"
                 >
-                  <v-text-field
+                  <v-textarea
                     v-model="titleInput"
                     :rules="[rules.required, rules.counter]"
-                    label="Title"
+                    no-resize
                     counter
+                    auto-grow
                     maxlength="100"
-                  ></v-text-field>
+                    rows="1"
+                  ></v-textarea>
                 </v-form>
               </v-col>
             </v-row>
