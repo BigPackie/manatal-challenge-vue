@@ -15,6 +15,14 @@ export default new Vuex.Store({
     setHeadlines(state, headlines) {
       state.headlines = headlines;
     },
+    changeHeadlineTitle(state, { id, newTitle }) {
+      const headline = state.headlines.find((item) => item.customId === id);
+      if (!headline) {
+        console.log('Headline not found');
+        return;
+      }
+      headline.title = newTitle;
+    },
   },
   actions: {
     fetchAllHeadlines({ commit }) {
@@ -25,6 +33,9 @@ export default new Vuex.Store({
         );
         commit('setHeadlines', enrichedHeadlines);
       });
+    },
+    changeHeadlineTitle({ commit }, payload) {
+      commit('changeHeadlineTitle', payload);
     },
   },
   modules: {

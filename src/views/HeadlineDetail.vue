@@ -28,12 +28,18 @@
             :src="headline.urlToImage"
           >
           </v-img>
-          <v-card-title>Top 10 Australian beaches</v-card-title>
-          <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
+          <v-card-title>{{ headline.title}}</v-card-title>
+          <v-row no-gutters>
+          <v-card-subtitle class="py-0"><span>{{headline.publishedAt}},
+             {{headline.source.name}}</span></v-card-subtitle>
+          <v-spacer></v-spacer>
+          <v-card-subtitle class="py-0"><span> by {{headline.author}}</span></v-card-subtitle>
+          </v-row>
 
           <v-card-text class="text--primary">
-            <div>Whitehaven Beach</div>
-            <div>Whitsunday Island, Whitsunday Islands</div>
+            <div class="text-justify"><strong>{{headline.description}}</strong></div>
+            <br>
+            <p class="text-justify">{{headline.content}}</p>
           </v-card-text>
         </v-card>
 
@@ -59,7 +65,7 @@ export default {
     };
   },
   created() {
-    console.log('created in detail');
+    console.log('CREATED in detail');
     this.lazyLoadHeadline();
   },
   watch: {
