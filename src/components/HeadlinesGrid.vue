@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import HeadlineCard from './HeadlineCard.vue';
 
 export default {
@@ -33,7 +33,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['headlines']),
+    ...mapState(['headlines']),
   },
 
   methods: {

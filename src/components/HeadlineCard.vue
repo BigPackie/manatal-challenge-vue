@@ -19,9 +19,14 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-btn color="orange" text>Share</v-btn>
+        <v-btn color="orange" text>Change</v-btn>
 
-        <v-btn color="orange" text>Explore</v-btn>
+        <v-btn color="orange"
+          text
+          @click="showDetails(headline.customId)"
+        >
+          Details
+        </v-btn>
       </v-card-actions>
     </v-card>
      </v-hover>
@@ -34,6 +39,11 @@ export default {
     headline: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    showDetails(id) {
+      this.$router.push({ path: `/news/${id}` });
     },
   },
 };

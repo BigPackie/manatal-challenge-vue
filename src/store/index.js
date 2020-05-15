@@ -9,9 +9,7 @@ export default new Vuex.Store({
     headlines: [],
   },
   getters: {
-    headlines(state) {
-      return state.headlines;
-    },
+    headline: (state) => (id) => state.headlines.find((item) => item.customId === id),
   },
   mutations: {
     setHeadlines(state, headlines) {

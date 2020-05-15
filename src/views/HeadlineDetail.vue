@@ -17,18 +17,49 @@
     </v-app-bar>
 
     <v-container transition="scale-transition">
-        Headlines details container
+        Headlines details container {{id}}  headline {{headline.title}}
 
     </v-container>
   </div>
 </template>
 
 <script>
+
 export default {
+  props: {
+    id: {
+      type: Number,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      headline: {},
+    };
+  },
   methods: {
     backToNews() {
-      this.$router.push('news');
+      this.$router.push('/news');
     },
+    loadHeadline() {
+      if (this.headline && this.headline.customId === this.id) {
+        console.log('Loading headline in detail skipped. Already loaded');
+        return;
+      }
+      console.log('Loading headline in detail');
+      this.headline = this.$store.getters.headline(this.id);
+    },
+  },
+  created() {
+    console.log('created in detail');
+    this.loadHeadline();
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+    // access to component instance via `vm`
+      console.log(`before rout enter called: ${vm.id}`);
+      vm.loadHeadline();
+    });
   },
 };
 </script>

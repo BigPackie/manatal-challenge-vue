@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import News from '../views/News.vue';
-import HeadlineDetail from '../views/HeadlineDetail.vue';
 
 Vue.use(VueRouter);
 
@@ -11,15 +10,16 @@ const routes = [
     component: News,
   },
   {
-    path: '/headline',
-    component: HeadlineDetail,
-  },
-  {
-    path: '/about',
+    path: '/news/:id',
     // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
+    // this generates a separate chunk (headlineDetail.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    component: () => import(/* webpackChunkName: "headlineDetail" */ '../views/HeadlineDetail.vue'),
+    props(route) {
+      const props = { ...route.params };
+      props.id = +props.id; // convert to number
+      return props;
+    },
   },
   {
     path: '/',
