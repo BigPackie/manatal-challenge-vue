@@ -10,12 +10,14 @@
           <v-card-title>{{ headline.title }}</v-card-title>
         </v-img>
 
-        <v-card-subtitle class="pb-0">
-          {{ headline.source.name }}
+        <v-card-subtitle class="pb-1">
+          {{headline.publishedAt | formatDate}}
         </v-card-subtitle>
 
         <v-card-text class="text--primary">
-          <div>{{ headline.description }}</div>
+          <div class="text-justify" style="max-height:200px; overflow: hidden">
+            {{ headline.description }}
+          </div>
         </v-card-text>
 
         <CardToolbar
