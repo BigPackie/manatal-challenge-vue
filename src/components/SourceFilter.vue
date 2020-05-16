@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" scrollable persistent fullscreen max-width="300px">
+    <v-dialog v-model="isOpen" scrollable persistent fullscreen max-width="300px">
       <template v-slot:activator="{ on }">
         <v-badge bordered color="error" content="6" overlap light>
           <v-btn class="white--text hidden-sm-and-down" dark v-on="on">Sources</v-btn>
@@ -19,6 +19,7 @@
             item-text="name"
             item-value="id"
             multiple
+            return-object
             >
             <template v-slot:selection="data">
               <v-chip
@@ -54,9 +55,9 @@
           </v-select>
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+        <v-card-actions class="mx-auto">
+          <v-btn color="blue darken-1" text @click="cancel">Close</v-btn>
+          <v-btn color="blue darken-1" text @click="confirm">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -64,21 +65,18 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
   data() {
     return {
-      dialog: false,
+      isOpen: false,
       selectedSources: [],
     };
   },
   computed: {
     sources() {
-      return this.$store.state.sources.map((item) => ({
-        id: item.id,
-        name: item.name,
-      }));
+      return this.$store.state.sources;
     },
     allSourcesSelected() {
       return this.selectedSources.length === this.sources.length;
@@ -90,6 +88,11 @@ export default {
       if (this.allSourcesSelected) return 'mdi-close-box';
       if (this.someSourcesSelected) return 'mdi-minus-box';
       return 'mdi-checkbox-blank-outline';
+    },
+  },
+  watch: {
+    isOpen() {
+      this.reload();
     },
   },
   created() {
@@ -108,6 +111,14 @@ export default {
   },
   methods: {
     ...mapActions(['fetchAllSources']),
+    ...mapMutations(['setFilteredSources']),
+    confirm() {
+      this.setFilteredSources(this.selectedSources);
+      this.isOpen = false;
+    },
+    cancel() {
+      this.isOpen = false;
+    },
     toggle() {
       this.$nextTick(() => {
         if (this.allSourcesSelected) {
@@ -116,6 +127,9 @@ export default {
           this.selectedSources = this.sources.slice();
         }
       });
+    },
+    reload() {
+      this.selectedSources = this.$store.state.filteredSources.slice();
     },
   },
 };

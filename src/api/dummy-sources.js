@@ -1,6 +1,10 @@
 /* eslint-disable vue/max-len */
 const dummy = [
   {
+    id: 'null',
+    name: 'Nbcsports.com',
+  },
+  {
     id: 'abc-news',
     name: 'ABC News',
     description: 'Your trusted source for breaking news, analysis, exclusive interviews, headlines, and videos at ABCNews.com.',

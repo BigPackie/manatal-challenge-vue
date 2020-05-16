@@ -3,7 +3,7 @@
     <Loading :isLoading="isLoading">Loading news...</Loading>
     <v-row justify="center">
       <HeadlineCard
-        v-for="headline in headlines" :key="headline.customId"
+        v-for="headline in filteredHeadlines" :key="headline.customId"
         :headline="headline">
       </HeadlineCard>
     </v-row>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import HeadlineCard from './HeadlineCard.vue';
 
 export default {
@@ -24,6 +24,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['filteredHeadlines']),
     ...mapState(['headlines']),
   },
 

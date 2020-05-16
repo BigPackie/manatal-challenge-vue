@@ -9,9 +9,13 @@ export default new Vuex.Store({
   state: {
     headlines: [],
     sources: [],
+    filteredSources: [],
   },
   getters: {
     headline: (state) => (id) => state.headlines.find((item) => item.customId === id),
+    filteredHeadlines: (state) => state.headlines
+      .filter((item) => state.filteredSources
+        .find((src) => item.source.id === src.id || item.source.name === src.name)),
   },
   mutations: {
     setHeadlines(state, headlines) {
@@ -19,6 +23,9 @@ export default new Vuex.Store({
     },
     setSources(state, sources) {
       state.sources = sources;
+    },
+    setFilteredSources(state, sources) {
+      state.filteredSources = sources;
     },
     changeHeadlineTitle(state, { id, newTitle }) {
       const headline = state.headlines.find((item) => item.customId === id);
@@ -39,13 +46,11 @@ export default new Vuex.Store({
         commit('setHeadlines', enrichedHeadlines);
       });
     },
-    changeHeadlineTitle({ commit }, payload) {
-      commit('changeHeadlineTitle', payload);
-    },
     fetchAllSources({ commit }) {
       console.log('fetching sources action activated');
       return fetchSources().then((sources) => {
         commit('setSources', sources);
+        commit('setFilteredSources', sources);
       });
     },
   },
