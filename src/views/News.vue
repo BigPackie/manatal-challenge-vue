@@ -9,6 +9,7 @@
 
        <v-spacer class="hidden-sm-and-down"></v-spacer>
       <v-text-field
+        col="3"
         flat
         solo-inverted
         hide-details
@@ -18,7 +19,7 @@
       ></v-text-field>
 
       <v-spacer class="hidden-sm-and-down ml--2"></v-spacer>
-      <v-badge
+      <!-- <v-badge
         bordered
         color="error"
         content="6"
@@ -31,7 +32,8 @@
         >
           Sources
         </v-btn>
-      </v-badge>
+      </v-badge> -->
+      <SourceFilter></SourceFilter>
     </v-app-bar>
 
     <HeadlinesGrid/>
@@ -40,10 +42,12 @@
 
 <script>
 import HeadlinesGrid from '../components/HeadlinesGrid.vue';
+import SourceFilter from '../components/SourceFilter.vue';
 
 export default {
   components: {
     HeadlinesGrid,
+    SourceFilter,
   },
 };
 </script>

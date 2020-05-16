@@ -1,12 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import fetchHeadlines from '../api/dummy-headlines';
+import fetchSources from '../api/dummy-sources';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     headlines: [],
+    sources: [],
   },
   getters: {
     headline: (state) => (id) => state.headlines.find((item) => item.customId === id),
@@ -14,6 +16,9 @@ export default new Vuex.Store({
   mutations: {
     setHeadlines(state, headlines) {
       state.headlines = headlines;
+    },
+    setSources(state, sources) {
+      state.sources = sources;
     },
     changeHeadlineTitle(state, { id, newTitle }) {
       const headline = state.headlines.find((item) => item.customId === id);
@@ -36,6 +41,12 @@ export default new Vuex.Store({
     },
     changeHeadlineTitle({ commit }, payload) {
       commit('changeHeadlineTitle', payload);
+    },
+    fetchAllSources({ commit }) {
+      console.log('fetching sources action activated');
+      return fetchSources().then((sources) => {
+        commit('setSources', sources);
+      });
     },
   },
   modules: {
