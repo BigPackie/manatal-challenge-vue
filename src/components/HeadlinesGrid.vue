@@ -6,6 +6,7 @@
         v-for="headline in filteredHeadlines" :key="headline.customId"
         :headline="headline">
       </HeadlineCard>
+      <p v-if="!filteredHeadlines || filteredHeadlines.length == 0" class="headline">No results!</p>
     </v-row>
   </v-container>
 </template>
@@ -27,7 +28,6 @@ export default {
     ...mapActions(['fetchAllHeadlines']),
   },
   created() {
-    console.log('HeadlinesGridComponent created hook');
     if (this.headlines.length === 0) {
       this.fetchAllHeadlines();
     }
