@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { fetchHeadlines, fetchHeadlinesByString } from '../api/dummy-headlines';
-import fetchSources from '../api/dummy-sources';
+import { api } from '../api/news';
+
 
 Vue.use(Vuex);
 
@@ -17,7 +17,10 @@ export default new Vuex.Store({
     headline: (state) => (id) => state.headlines.find((item) => item.customId === id),
     filteredHeadlines: (state) => state.headlines
       .filter((item) => state.filteredSources
-        .find((src) => item.source.id === src.id || item.source.name === src.name)),
+        .find((src) => item.source.id === src.id
+        || item.source.name === src.name
+        // when "all sources" are let though, without id or different source
+        || state.filteredSources.length === state.sources.length)),
     isLoading: (state) => !(state.dataLoadingCounter <= 0),
   },
   mutations: {
@@ -58,7 +61,7 @@ export default new Vuex.Store({
     fetchAllHeadlines({ commit }) {
       console.log('fetching headlines action activated');
       commit('incDataLoad');
-      return fetchHeadlines()
+      return api.fetchHeadlines()
         .then((headlines) => {
           const enrichedHeadlines = headlines.map(
             (headline, index) => ({ customId: index, ...headline }),
@@ -71,7 +74,7 @@ export default new Vuex.Store({
     fetchAllSources({ commit }) {
       console.log('fetching sources action activated');
       commit('incDataLoad');
-      return fetchSources()
+      return api.fetchSources()
         .then((sources) => {
           commit('setSources', sources);
           commit('setFilteredSources', sources);
@@ -83,7 +86,7 @@ export default new Vuex.Store({
     fetchBySearchString({ commit }, payload) {
       console.log(`fetching headlines by search action activated, payload: ${payload}`);
       commit('incDataLoad');
-      return fetchHeadlinesByString(payload)
+      return api.fetchHeadlinesByString(payload)
         .then((headlines) => {
           const enrichedHeadlines = headlines.map(
             (headline, index) => ({ customId: index, ...headline }),

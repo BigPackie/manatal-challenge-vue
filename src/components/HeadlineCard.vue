@@ -6,12 +6,15 @@
           class="white--text align-end"
           height="200px"
           :src="headline.urlToImage"
+          style="background-color:black"
         >
           <v-card-title>{{ headline.title }}</v-card-title>
         </v-img>
 
-        <v-card-subtitle class="pb-1">
-          {{headline.publishedAt | formatDate}}
+        <v-card-subtitle class="pb-1" style="display:flex">
+          <span>{{headline.publishedAt | formatDate}}</span>
+          <v-spacer></v-spacer>
+          <span>{{headline.source.name}}</span>
         </v-card-subtitle>
 
         <v-card-text class="text--primary">

@@ -4,7 +4,7 @@
         flat
         solo-inverted
         hide-details
-        placeholder="Type at least 3 letters to search"
+        placeholder="Type here to search"
         prepend-inner-icon="mdi-magnify"
         label="Search"
         class="ml-sm-2 mr-2"
@@ -22,7 +22,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['fetchBySearchString']),
+    ...mapActions(['fetchBySearchString', 'fetchAllHeadlines']),
     onChangeSearch(value) {
       console.log(`Triggered onchange: ${value}`);
 
@@ -31,10 +31,11 @@ export default {
     throttleApiCall(value) {
       clearTimeout(this.timer);
       const searchString = value.trim();
-      if (searchString.length > 0 && searchString.length <= 2) {
-        return;
+      if (searchString.length > 0) {
+        this.timer = setTimeout(() => this.fetchBySearchString(searchString), 400);
+      } else {
+        this.timer = setTimeout(() => this.fetchAllHeadlines(), 400);
       }
-      this.timer = setTimeout(() => this.fetchBySearchString(searchString), 400);
     },
   },
 
