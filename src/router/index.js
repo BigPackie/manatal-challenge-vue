@@ -1,27 +1,47 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+import News from '../views/News.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home,
+    path: '/news',
+    component: News,
+    name: 'news',
   },
   {
-    path: '/about',
-    name: 'About',
+    path: '/news/:id',
+    name: 'detail',
     // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
+    // this generates a separate chunk (headlineDetail.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    component: () => import(/* webpackChunkName: "headlineDetail" */ '../views/HeadlineDetail.vue'),
+    props(route) {
+      const props = { ...route.params };
+      props.id = +props.id; // convert to number
+      return props;
+    },
+  },
+  {
+    path: '/',
+    redirect: '/news',
+  },
+  {
+    path: '*',
+    redirect: '/',
   },
 ];
 
 const router = new VueRouter({
   routes,
+  mode: 'history',
+  scrollBehavior(to, from, savedPosition) {
+    if (to.name === 'detail') {
+      return { x: 0, y: 0 };
+    }
+    return savedPosition;
+  },
 });
 
 export default router;

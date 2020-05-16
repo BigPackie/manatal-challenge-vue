@@ -15,8 +15,8 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/max-len': ['error', {
       'ignoreUrls': true,
-      'template': 80,
-      'code': 80,
+      'template': 120,
+      'code': 100,
     }],
   },
   overrides: [
