@@ -24,8 +24,6 @@ export default {
   methods: {
     ...mapActions(['fetchBySearchString', 'fetchAllHeadlines']),
     onChangeSearch(value) {
-      console.log(`Triggered onchange: ${value}`);
-
       this.throttleApiCall(value);
     },
     throttleApiCall(value) {

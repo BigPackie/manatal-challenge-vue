@@ -51,7 +51,6 @@ export default new Vuex.Store({
     changeHeadlineTitle(state, { id, newTitle }) {
       const headline = state.headlines.find((item) => item.customId === id);
       if (!headline) {
-        console.log('Headline not found');
         return;
       }
       headline.title = newTitle;
@@ -59,7 +58,6 @@ export default new Vuex.Store({
   },
   actions: {
     fetchAllHeadlines({ commit }) {
-      console.log('fetching headlines action activated');
       commit('incDataLoad');
       return api.fetchHeadlines()
         .then((headlines) => {
@@ -72,7 +70,6 @@ export default new Vuex.Store({
         });
     },
     fetchAllSources({ commit }) {
-      console.log('fetching sources action activated');
       commit('incDataLoad');
       return api.fetchSources()
         .then((sources) => {
@@ -84,7 +81,6 @@ export default new Vuex.Store({
     },
     /** Works together with SourceFilter */
     fetchBySearchString({ commit }, payload) {
-      console.log(`fetching headlines by search action activated, payload: ${payload}`);
       commit('incDataLoad');
       return api.fetchHeadlinesByString(payload)
         .then((headlines) => {

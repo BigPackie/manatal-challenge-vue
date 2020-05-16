@@ -88,7 +88,6 @@ export default {
       }
     },
     validate() {
-      console.log('called validate');
       this.$refs.form.validate();
     },
     reload() {

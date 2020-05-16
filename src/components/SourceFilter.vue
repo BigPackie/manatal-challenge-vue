@@ -104,7 +104,6 @@ export default {
     },
   },
   created() {
-    console.log('SourceFilter created hook');
     if (this.sources.length === 0) {
       this.fetchAllSources()
         .then(() => this.reload());

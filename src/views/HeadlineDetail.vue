@@ -64,7 +64,6 @@ export default {
     };
   },
   created() {
-    console.log('CREATED in detail');
     this.lazyLoadHeadline();
   },
   watch: {
@@ -77,7 +76,6 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      console.log(`entering route:${to.name} and ${to.path} and ${vm.headline.title}`);
       vm.logRoute({ path: to.path, title: vm.headline.title });
     });
   },
@@ -88,11 +86,9 @@ export default {
       this.$router.push('/news');
     },
     getHeadline() {
-      console.log('Getting headline in detail');
       this.headline = this.$store.getters.headline(this.id);
     },
     loadHeadlines() {
-      console.log('Loading all headlines because they are not yet initiated');
       return this.fetchAllHeadlines();
     },
     async lazyLoadHeadline() {
