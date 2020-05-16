@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { api } from '../api/news';
 
+import alert from './modules/alert';
 
 Vue.use(Vuex);
 
@@ -94,5 +95,6 @@ export default new Vuex.Store({
     },
   },
   modules: {
+    alert,
   },
 });

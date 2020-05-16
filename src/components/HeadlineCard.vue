@@ -2,14 +2,21 @@
   <v-col sm="6" md="4" lg="3" xl="2">
     <v-hover v-slot:default="{ hover }">
       <v-card class="mx-auto" max-width="800" :elevation="hover ? 16 : 2" >
-        <v-img
+        <v-img v-if="headline.urlToImage"
           class="white--text align-end"
           height="200px"
           :src="headline.urlToImage"
           style="background-color:black"
         >
-          <v-card-title>{{ headline.title }}</v-card-title>
+
         </v-img>
+
+        <div v-if="!headline.urlToImage"
+          style="height:200px; display:flex; background-color:black"
+          class="white--text"
+        >
+          <v-card-title >{{ headline.title }}</v-card-title>
+        </div>
 
         <v-card-subtitle class="pb-1" style="display:flex">
           <span>{{headline.publishedAt | formatDate}}</span>
@@ -45,7 +52,7 @@
 
 <script>
 
-import CardToolbar from './cardToolbar.vue';
+import CardToolbar from './CardToolbar.vue';
 import ChangeTitleModal from './ChangeTitleModal.vue';
 
 export default {

@@ -2,6 +2,8 @@
 
 **This application's purpose is to showcase my skills in Vue and other related technologies**
 
+Type ***wrong*** into the search bar to trigger an unauthorized API call and display an error message.
+
 We have to use [https://newsapi.org/](https://newsapi.org/) to fetch news, but it seems we are limited to 3 queries
 with specific query parameters.
 

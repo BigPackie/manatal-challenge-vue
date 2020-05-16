@@ -8,6 +8,7 @@
       <HistoryTracker></HistoryTracker>
       <SourceFilter></SourceFilter>
     </v-app-bar>
+    <Alert></Alert>
     <HeadlinesGrid/>
   </div>
 </template>
@@ -16,12 +17,14 @@
 import HeadlinesGrid from '../components/HeadlinesGrid.vue';
 import SourceFilter from '../components/SourceFilter.vue';
 import SearchBar from '../components/SearchBar.vue';
+import Alert from '../components/Alert.vue';
 
 export default {
   components: {
     HeadlinesGrid,
     SourceFilter,
     SearchBar,
+    Alert,
   },
 };
 </script>

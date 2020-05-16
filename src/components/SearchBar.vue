@@ -13,7 +13,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
+import { api } from '../api/news';
 
 export default {
   data() {
@@ -23,12 +24,23 @@ export default {
   },
   methods: {
     ...mapActions(['fetchBySearchString', 'fetchAllHeadlines']),
+    ...mapMutations('alert', ['setAlert']),
     onChangeSearch(value) {
       this.throttleApiCall(value);
     },
     throttleApiCall(value) {
       clearTimeout(this.timer);
       const searchString = value.trim();
+
+      if (searchString === 'wrong') {
+        api.badRequest()
+          .then()
+          .catch((error) => {
+            this.setAlert({ message: `Error: ${error?.body?.message}`, type: 'error' });
+          });
+        return;
+      }
+
       if (searchString.length > 0) {
         this.timer = setTimeout(() => this.fetchBySearchString(searchString), 400);
       } else {
