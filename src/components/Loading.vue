@@ -1,5 +1,5 @@
 <template>
-    <v-overlay  absolute opacity="0.2" v-if="isLoading">
+    <v-overlay  absolute opacity="0.8" color="white" v-if="isLoading">
       <v-progress-circular
         indeterminate
         color="primary"
