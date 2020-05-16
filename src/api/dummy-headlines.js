@@ -110,8 +110,21 @@ const dummy = [{
 },
 ];
 
-export default function fetchHeadlines() {
+export function fetchHeadlines() {
   return new Promise(
     (resolve) => setTimeout(() => resolve(dummy), 2000),
+  );
+}
+
+export function fetchHeadlinesByString(searchString) {
+  return new Promise(
+    (resolve) => setTimeout(() => {
+      let searched = dummy;
+      if (searchString.length > 0) {
+        searched = dummy.filter((item) => item.title.includes(searchString));
+      }
+      resolve(searched);
+    },
+    2000),
   );
 }
