@@ -10,6 +10,7 @@ export default new Vuex.Store({
     headlines: [],
     sources: [],
     filteredSources: [],
+    routeHistory: [],
   },
   getters: {
     headline: (state) => (id) => state.headlines.find((item) => item.customId === id),
@@ -18,6 +19,15 @@ export default new Vuex.Store({
         .find((src) => item.source.id === src.id || item.source.name === src.name)),
   },
   mutations: {
+    logRoute(state, { path, title }) {
+      state.routeHistory.unshift(
+        {
+          path,
+          title,
+          dateTime: new Date(),
+        },
+      );
+    },
     setHeadlines(state, headlines) {
       state.headlines = headlines;
     },
@@ -39,19 +49,21 @@ export default new Vuex.Store({
   actions: {
     fetchAllHeadlines({ commit }) {
       console.log('fetching headlines action activated');
-      return fetchHeadlines().then((headlines) => {
-        const enrichedHeadlines = headlines.map(
-          (headline, index) => ({ customId: index, ...headline }),
-        );
-        commit('setHeadlines', enrichedHeadlines);
-      });
+      return fetchHeadlines()
+        .then((headlines) => {
+          const enrichedHeadlines = headlines.map(
+            (headline, index) => ({ customId: index, ...headline }),
+          );
+          commit('setHeadlines', enrichedHeadlines);
+        });
     },
     fetchAllSources({ commit }) {
       console.log('fetching sources action activated');
-      return fetchSources().then((sources) => {
-        commit('setSources', sources);
-        commit('setFilteredSources', sources);
-      });
+      return fetchSources()
+        .then((sources) => {
+          commit('setSources', sources);
+          commit('setFilteredSources', sources);
+        });
     },
   },
   modules: {

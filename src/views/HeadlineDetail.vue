@@ -9,7 +9,7 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-
+      <HistoryTracker></HistoryTracker>
        <v-btn  @click=backToNews text>
         <v-icon left>mdi-arrow-left</v-icon>
         <span class="mr-2">Back</span>
@@ -41,15 +41,17 @@
             <div class="text-justify"><strong>{{headline.description}}</strong></div>
             <br>
             <p class="text-justify">{{headline.content}}</p>
+            <p>
+              <a :href="headline.url" target="_blank" rel="noopener noreferrer">Read more...</a>
+            </p>
           </v-card-text>
         </v-card>
-
     </v-container>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
   props: {
@@ -77,8 +79,15 @@ export default {
       this.lazyLoadHeadline();
     },
   },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      console.log(`entering route:${to.name} and ${to.path} and ${vm.headline.title}`);
+      vm.logRoute({ path: to.path, title: vm.headline.title });
+    });
+  },
   methods: {
     ...mapActions(['fetchAllHeadlines']),
+    ...mapMutations(['logRoute']),
     backToNews() {
       this.$router.push('/news');
     },

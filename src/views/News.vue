@@ -7,7 +7,8 @@
         <span >News</span>
       </v-toolbar-title>
 
-       <v-spacer class="hidden-sm-and-down"></v-spacer>
+       <!-- <v-spacer class="hidden-sm-and-down"></v-spacer> -->
+
       <v-text-field
         col="3"
         flat
@@ -15,24 +16,12 @@
         hide-details
         prepend-inner-icon="mdi-magnify"
         label="Search"
-        class="mx-2"
+        class="ml-sm-2 mr-2"
       ></v-text-field>
 
-      <v-spacer class="hidden-sm-and-down ml--2"></v-spacer>
-      <!-- <v-badge
-        bordered
-        color="error"
-        content="6"
-        overlap
-        light
-      >
-        <v-btn
-          class="white--text"
-          dark
-        >
-          Sources
-        </v-btn>
-      </v-badge> -->
+      <!-- <v-spacer class="hidden-sm-and-down ml--2"></v-spacer> -->
+
+      <HistoryTracker></HistoryTracker>
       <SourceFilter></SourceFilter>
     </v-app-bar>
 

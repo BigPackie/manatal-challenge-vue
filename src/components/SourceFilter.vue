@@ -1,11 +1,19 @@
 <template>
-  <v-row justify="center">
     <v-dialog v-model="isOpen" scrollable persistent fullscreen max-width="300px">
       <template v-slot:activator="{ on }">
-        <v-badge bordered color="error" content="6" overlap light>
-          <v-btn class="white--text hidden-sm-and-down" dark v-on="on">Sources</v-btn>
-          <v-btn class="ma-2 show-sm-and-down hidden-md-and-up" dark>
-            <v-icon dark>mdi-wrench</v-icon>
+        <v-badge
+          bordered color="error"
+          :content="selectedSources.length"
+          overlap
+          light
+          class="mr-1"
+        >
+          <v-btn class="white--text hidden-sm-and-down" dark v-on="on">
+            Sources
+            <v-icon dark right>mdi-source-branch</v-icon>
+          </v-btn>
+          <v-btn class="show-sm-and-down hidden-md-and-up" dark v-on="on">
+            <v-icon dark>mdi-source-branch</v-icon>
           </v-btn>
         </v-badge>
       </template>
@@ -19,6 +27,7 @@
             item-text="name"
             item-value="id"
             multiple
+            placeholder="Click here to select sources."
             return-object
             >
             <template v-slot:selection="data">
@@ -61,7 +70,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-row>
 </template>
 
 <script>
@@ -100,13 +108,10 @@ export default {
     if (this.sources.length === 0) {
       this.isLoading = true;
       this.fetchAllSources()
-        .then(/* Handled by store */)
+        .then(() => this.reload())
         .catch(() => {
           console.log('Failed getting sources. Try to reload the page.');
-        }) // show in modal or somethign, maybe provide button for reload
-        .finally(() => {
-          this.isLoading = false;
-        });
+        }); // show in modal or somethign, maybe provide button for reload
     }
   },
   methods: {
