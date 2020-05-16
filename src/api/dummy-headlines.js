@@ -110,21 +110,19 @@ const dummy = [{
 },
 ];
 
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export function fetchHeadlines() {
-  return new Promise(
-    (resolve) => setTimeout(() => resolve(dummy), 2000),
-  );
+  return wait(2000).then(() => dummy);
 }
 
 export function fetchHeadlinesByString(searchString) {
-  return new Promise(
-    (resolve) => setTimeout(() => {
-      let searched = dummy;
-      if (searchString.length > 0) {
-        searched = dummy.filter((item) => item.title.includes(searchString));
-      }
-      resolve(searched);
-    },
-    2000),
-  );
+  return wait(2000).then(() => {
+    let searched = dummy;
+    if (searchString.length > 0) {
+      searched = dummy
+        .filter((item) => item.title.toLowerCase().includes(searchString.toLowerCase()));
+    }
+    return searched;
+  });
 }

@@ -1,5 +1,5 @@
 <template>
-    <v-overlay  absolute opacity="0" v-if="isLoading">
+    <v-overlay  absolute opacity="0.2" v-if="isLoading">
       <v-progress-circular
         indeterminate
         color="primary"
@@ -15,10 +15,9 @@
 
 <script>
 export default {
-  props: {
-    isLoading: {
-      type: Boolean,
-      required: true,
+  computed: {
+    isLoading() {
+      return this.$store.getters.isLoading;
     },
   },
 

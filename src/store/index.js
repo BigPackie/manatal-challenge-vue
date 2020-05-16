@@ -18,6 +18,7 @@ export default new Vuex.Store({
     filteredHeadlines: (state) => state.headlines
       .filter((item) => state.filteredSources
         .find((src) => item.source.id === src.id || item.source.name === src.name)),
+    isLoading: (state) => !(state.dataLoadingCounter <= 0),
   },
   mutations: {
     incDataLoad(state) {

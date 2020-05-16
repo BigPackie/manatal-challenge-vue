@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <Loading :isLoading="isLoading">Loading news...</Loading>
+    <Loading>Loading news...</Loading>
     <v-row justify="center">
       <HeadlineCard
         v-for="headline in filteredHeadlines" :key="headline.customId"
@@ -18,11 +18,6 @@ export default {
   components: {
     HeadlineCard,
   },
-  data() {
-    return {
-      isLoading: false,
-    };
-  },
   computed: {
     ...mapGetters(['filteredHeadlines']),
     ...mapState(['headlines']),
@@ -34,15 +29,7 @@ export default {
   created() {
     console.log('HeadlinesGridComponent created hook');
     if (this.headlines.length === 0) {
-      this.isLoading = true;
-      this.fetchAllHeadlines()
-        .then(/* Handled by store */)
-        .catch(() => {
-          console.log('Failed getting headlines. Try to reload the page.');
-        }) // show in modal or somethign, maybe provide button for reload
-        .finally(() => {
-          this.isLoading = false;
-        });
+      this.fetchAllHeadlines();
     }
   },
 };

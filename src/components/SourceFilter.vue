@@ -3,7 +3,7 @@
       <template v-slot:activator="{ on }">
         <v-badge
           bordered color="error"
-          :content="selectedSources.length"
+          :content="selectedSources.length ? selectedSources.length : '0' "
           overlap
           light
           class="mr-1"
@@ -106,12 +106,8 @@ export default {
   created() {
     console.log('SourceFilter created hook');
     if (this.sources.length === 0) {
-      this.isLoading = true;
       this.fetchAllSources()
-        .then(() => this.reload())
-        .catch(() => {
-          console.log('Failed getting sources. Try to reload the page.');
-        }); // show in modal or somethign, maybe provide button for reload
+        .then(() => this.reload());
     }
   },
   methods: {

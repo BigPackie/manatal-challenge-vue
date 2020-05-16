@@ -15,12 +15,9 @@
         <span class="mr-2">Back</span>
       </v-btn>
     </v-app-bar>
-    <Loading :isLoading="isLoading">{{loading}}</Loading>
-    <v-container>
-        <v-card
-          class="mx-auto"
-          v-if="!isLoading && headline !== null"
-        >
+    <Loading>{{loading}}</Loading>
+    <v-container v-if="headline">
+        <v-card class="mx-auto">
           <v-img
             max-height="400px"
             contain
@@ -62,8 +59,7 @@ export default {
   },
   data() {
     return {
-      headline: Object,
-      isLoading: false,
+      headline: null,
       loading: '',
     };
   },
@@ -97,17 +93,9 @@ export default {
     },
     loadHeadlines() {
       console.log('Loading all headlines because they are not yet initiated');
-      // TODO: same as in HeadlineGrid, maybe provide Mixin
-      return this.fetchAllHeadlines()
-        .then(/* Handled by store */)
-        .catch(() => {
-          console.log('Failed getting headlines. Try to reload the page.');
-          this.isLoading = false;
-        });
+      return this.fetchAllHeadlines();
     },
     async lazyLoadHeadline() {
-      this.isLoading = true;
-
       this.loading = 'Loading news...';
       // when navigating here directly through url, news list might not be loaded
       if (this.$store.state.headlines.length === 0) {
@@ -118,8 +106,6 @@ export default {
       if (this.headline == null || this.headline.customId !== this.id) {
         this.getHeadline();
       }
-
-      this.isLoading = false;
     },
   },
 
